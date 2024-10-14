@@ -1,5 +1,6 @@
-import React, {useId} from 'react';
+import React from 'react';
 import axios from 'axios';
+import {v4 as uuidv4} from 'uuid';
 
 type Post = {
     id: string,
@@ -13,55 +14,72 @@ function App() {
     const [description, setDescription] = React.useState('');
     const [posts, setPosts] = React.useState<Post[]>([]);
     const [loading, setLoading] = React.useState(false);
+    const [error, setError] = React.useState('');
 
-    const id = useId()
-
-    const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
         try {
             const response = await axios.post('https://jsonplaceholder.typicode.com/posts', {
-                    id: id,
+                    id: uuidv4(),
                     title: title,
                     body: description,
-                    userId: id
                 }
             )
             setPosts([...posts, response.data]);
             setLoading(false);
         } catch (e) {
             setLoading(false);
-            console.log(e)
+            setError("Failed to fetch posts.");
+            console.error(e);
         }
     }
+
+    const deletePostHandler = async (id?: string) => {
+        setLoading(true);
+        try {
+            const response = await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
+            setPosts([...posts, response.data]);
+            setLoading(false);
+        } catch (error) {
+            setError("Failed to delete post.");
+        }
+    }
+
     return (
         <div className="App">
             <h1>Simple CRUD APP</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <input type="text" value={title} placeholder="Title" name="title"
                        onChange={(event) => setTitle(event.target.value)}/>
                 <input type="text" value={description} placeholder="Description" name="description"
                        onChange={(event) => setDescription(event.target.value)}/>
-                <button type="submit" onClick={handleSubmit} disabled={loading}>
+                <button type="submit" disabled={loading}>
                     {loading ? 'Adding...' : 'Add Post'}
                 </button>
             </form>
 
             {posts.length === 0 &&
-                <>
+                <div>
                     <h2>Posts</h2>
                     <p>No posts available.</p>
-                </>}
-            <ul>
+                </div>
+            }
+            <div>
                 {posts.map((post: Post) => (
                     <div key={post.id}>
                         <h4>{post.title}</h4>
                         <p>{post.body}</p>
+                        <button onClick={() => deletePostHandler(post?.id)}>Delete Post</button>
                         <hr/>
                     </div>
                 ))}
-            </ul>
+            </div>
+
+            {error && <p style={{color: 'red'}}>{error}</p>}
         </div>
+
+
     );
 }
 
