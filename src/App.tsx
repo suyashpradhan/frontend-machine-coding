@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
+import {PracticingEffects} from "./PracticingEffects";
 
 type Post = {
     id: string,
@@ -39,7 +40,7 @@ function App() {
         setLoading(true);
         try {
             const response = await axios.delete(`https://jsonplaceholder.typicode.com/posts/${id}`)
-            setPosts([...posts, response.data]);
+            setPosts(posts.filter(post => post.id !== id));
             setLoading(false);
         } catch (error) {
             setError("Failed to delete post.");
@@ -77,9 +78,9 @@ function App() {
             </div>
 
             {error && <p style={{color: 'red'}}>{error}</p>}
+
+            <PracticingEffects/>
         </div>
-
-
     );
 }
 
