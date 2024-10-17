@@ -1,19 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+/*const link = React.createElement('a', {id: "link", "data-number": 20, href: "https://www.google.com"}, "Visit Link")
+const containerDomElement = document.getElementById('#root');
+
+const renderElement = (reactElement: any, containerDomElement: any) => {
+    const domElement = document.createElement(reactElement.type);
+
+    domElement.innerText = reactElement.children;
+    for (const key in reactElement.props) {
+        domElement.setAttribute(key, reactElement.props[key]);
+    }
+
+    containerDomElement.appendChild(domElement);
+}
+
+renderElement(link, containerDomElement)*/
+
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <React.StrictMode>
+        <App/>
+    </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

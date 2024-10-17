@@ -1,26 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Select} from "./Select";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [counter, setCounter] = React.useState(12);
+
+    return (
+        <div className="App">
+            <h1>hello world!</h1>
+            <button onClick={() => {
+                setCounter((prev) => prev + 1)
+                console.log(counter)
+            }}>Click {counter}
+            </button>
+
+            <Select/>
+        </div>
+    );
 }
 
 export default App;
