@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
 import {PracticingEffects} from "./PracticingEffects";
+import {InfiniteScrolling} from "./components/infinite-scrolling/InfiniteScrolling";
 
 type Post = {
     id: string,
@@ -81,6 +82,7 @@ function App() {
 
             <PracticingEffects/>
 
+            <InfiniteScrolling/>
         </div>
 
     )
