@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
-import {PracticingEffects} from "./PracticingEffects";
-import {InfiniteScrolling} from "./components/infinite-scrolling/InfiniteScrolling";
+import {TodoForm} from "./Todo/TodoForm";
 
 type Post = {
     id: string,
@@ -50,39 +49,36 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Simple CRUD APP</h1>
-            <form onSubmit={handleSubmit}>
-                <input type="text" value={title} placeholder="Title" name="title"
-                       onChange={(event) => setTitle(event.target.value)}/>
-                <input type="text" value={description} placeholder="Description" name="description"
-                       onChange={(event) => setDescription(event.target.value)}/>
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Adding...' : 'Add Post'}
-                </button>
-            </form>
+            {/*<h1>Simple CRUD APP</h1>*/}
+            {/*<form onSubmit={handleSubmit}>*/}
+            {/*    <input type="text" value={title} placeholder="Title" name="title"*/}
+            {/*           onChange={(event) => setTitle(event.target.value)}/>*/}
+            {/*    <input type="text" value={description} placeholder="Description" name="description"*/}
+            {/*           onChange={(event) => setDescription(event.target.value)}/>*/}
+            {/*    <button type="submit" disabled={loading}>*/}
+            {/*        {loading ? 'Adding...' : 'Add Post'}*/}
+            {/*    </button>*/}
+            {/*</form>*/}
 
-            {posts.length === 0 &&
-                <div>
-                    <h2>Posts</h2>
-                    <p>No posts available.</p>
-                </div>
-            }
-            <div>
-                {posts.map((post: Post) => (
-                    <div key={post.id}>
-                        <h4>{post.title}</h4>
-                        <p>{post.body}</p>
-                        <button onClick={() => deletePostHandler(post?.id)}>Delete Post</button>
-                        <hr/>
-                    </div>
-                ))}
-            </div>
+            {/*{posts.length === 0 &&*/}
+            {/*    <div>*/}
+            {/*        <h2>Posts</h2>*/}
+            {/*        <p>No posts available.</p>*/}
+            {/*    </div>*/}
+            {/*}*/}
+            {/*<div>*/}
+            {/*    {posts.map((post: Post) => (*/}
+            {/*        <div key={post.id}>*/}
+            {/*            <h4>{post.title}</h4>*/}
+            {/*            <p>{post.body}</p>*/}
+            {/*            <button onClick={() => deletePostHandler(post?.id)}>Delete Post</button>*/}
+            {/*            <hr/>*/}
+            {/*        </div>*/}
+            {/*    ))}*/}
+            {/*</div>*/}
 
-            {error && <p style={{color: 'red'}}>{error}</p>}
-
-            <PracticingEffects/>
-
-            <InfiniteScrolling/>
+            {/*{error && <p style={{color: 'red'}}>{error}</p>}*/}
+            <TodoForm/>
         </div>
 
     )
