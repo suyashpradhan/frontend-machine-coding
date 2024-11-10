@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {v4 as uuidv4} from 'uuid';
-import {TodoForm} from "./Todo/TodoForm";
+import {TodoApp} from "./Todo/TodoApp";
 
 type Post = {
     id: string,
@@ -78,7 +78,7 @@ function App() {
             {/*</div>*/}
 
             {/*{error && <p style={{color: 'red'}}>{error}</p>}*/}
-            <TodoForm/>
+            <TodoApp/>
         </div>
 
     )

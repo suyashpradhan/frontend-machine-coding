@@ -1,11 +1,11 @@
 import {ITodo} from "./Todo";
 
 export interface ITodoService {
-    fetchTodo(): Promise<ITodo[]>
+    fetchTodo(): ITodo[]
 
-    addTodo(todo: ITodo): Promise<void>
+    addTodo(todo: ITodo): void
 
-    updateTodo(todo: ITodo): Promise<void>
+    updateTodo(todo: ITodo): void
 
-    deleteTodo(todo: ITodo): Promise<void>
+    deleteTodo(id: string): ITodo[]
 }

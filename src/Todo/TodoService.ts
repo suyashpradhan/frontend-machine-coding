@@ -2,34 +2,40 @@ import {ITodoService} from "./ITodoService";
 import {ITodo} from "./Todo";
 
 export class TodoService implements ITodoService {
-    private url = 'https://jsonplaceholder.typicode.com/todos'
+    private todos: ITodo[] = [
+        {
+            userId: "1",
+            id: "1",
+            title: "One",
+            completed: false,
+        },
+        {
+            userId: "2",
+            id: "2",
+            title: "Two",
+            completed: false,
+        },
+        {
+            userId: "3",
+            id: "3",
+            title: "Three",
+            completed: true,
+        }
+    ]
 
-    async fetchTodo(): Promise<ITodo[]> {
-        const response = await fetch(this.url)
-        return response.json()
+    fetchTodo(): ITodo[] {
+        return this.todos
     }
 
-    async addTodo(todo: ITodo): Promise<void> {
-        await fetch(this.url, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(todo)
-        })
+    addTodo(todo: ITodo): void {
+        this.todos.push(todo)
     }
 
-    async updateTodo(todo: ITodo): Promise<void> {
-        await fetch(this.url, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(todo)
-        })
+    updateTodo(todo: ITodo): void {
+        this.todos.map((t) => t.id === todo.id ? todo : t)
     }
 
-    async deleteTodo(todo: ITodo): Promise<void> {
-        await fetch(this.url, {
-            method: 'DELETE',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(todo)
-        })
+    deleteTodo(id: string): ITodo[] {
+        return this.todos.filter((t) => t.id !== id)
     }
 }

@@ -1,23 +1,17 @@
-import {useEffect, useState} from "react";
 import {ITodo} from "./Todo";
-import {TodoService} from "./TodoService";
 import {TodoCard} from "./TodoCard";
 
-export const TodoList = () => {
-    const [todos, setTodos] = useState<ITodo[]>([])
-    const todoService = new TodoService()
+interface TodoListProps {
+    todos: ITodo[]
+    onToggle: (todo: ITodo) => void
+    onDelete: (id: string) => void
+}
 
-    useEffect(() => {
-        const loadTodos = async () => {
-            const fetchedTodos = await todoService.fetchTodo()
-            setTodos(fetchedTodos)
-        }
-        loadTodos()
-    }, []);
-
+export const TodoList = ({todos, onToggle, onDelete}: TodoListProps) => {
     return (
         <>
-            {todos?.map((todo: ITodo) => <TodoCard key={todo?.id} todo={todo}/>)}
+            {todos?.map((todo: ITodo) => <TodoCard key={todo?.id} todo={todo} onDelete={onDelete}
+                                                   onToggle={onToggle}/>)}
         </>
     )
 }
