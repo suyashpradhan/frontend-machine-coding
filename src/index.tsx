@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import "./index.css"
+import {ThemeProvider} from "./ThemeContext";
 
 /*const link = React.createElement('a', {id: "link", "data-number": 20, href: "https://www.google.com"}, "Visit Link")
 const containerDomElement = document.getElementById('#root');
@@ -24,7 +25,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
     <React.StrictMode>
-        <App/>
+        <ThemeProvider>
+            <App/>
+        </ThemeProvider>
     </React.StrictMode>
 );
 
