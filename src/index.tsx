@@ -3,8 +3,13 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import "./index.css"
 import {ThemeProvider} from "./ThemeContext";
+import {createBrowserRouter} from "react-router-dom";
+import {RouterProvider} from "react-router";
 
-/*const link = React.createElement('a', {id: "link", "data-number": 20, href: "https://www.google.com"}, "Visit Link")
+/*
+Building own React
+
+const link = React.createElement('a', {id: "link", "data-number": 20, href: "https://www.google.com"}, "Visit Link")
 const containerDomElement = document.getElementById('#root');
 
 const renderElement = (reactElement: any, containerDomElement: any) => {
@@ -18,7 +23,17 @@ const renderElement = (reactElement: any, containerDomElement: any) => {
     containerDomElement.appendChild(domElement);
 }
 
-renderElement(link, containerDomElement)*/
+renderElement(link, containerDomElement)
+
+
+*/
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <App/>,
+    },
+]);
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
@@ -26,7 +41,7 @@ const root = ReactDOM.createRoot(
 root.render(
     <React.StrictMode>
         <ThemeProvider>
-            <App/>
+            <RouterProvider router={router}/>
         </ThemeProvider>
     </React.StrictMode>
 );
