@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
 import "./index.css"
 import {ThemeProvider} from "./ThemeContext";
-import {createBrowserRouter} from "react-router-dom";
-import {RouterProvider} from "react-router";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import App from "./App";
+import {ProductsPage} from "./components/Ecommerce/ProductsPage";
+import {Product} from "./components/Ecommerce/Product";
 
 /*
 Building own React
@@ -28,20 +29,22 @@ renderElement(link, containerDomElement)
 
 */
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <App/>,
-    },
-]);
 
 const root = ReactDOM.createRoot(
     document.getElementById('root') as HTMLElement
 );
+
 root.render(
     <React.StrictMode>
         <ThemeProvider>
-            <RouterProvider router={router}/>
+            <BrowserRouter basename="/">
+                <Routes>
+                    <Route path="/" element={<App/>}></Route>
+                    <Route path="/products" element={<ProductsPage/>}></Route>
+                    <Route path="/products/:id" element={<Product/>}/>
+                    <Route path="*" element={<h1>404 Not found</h1>}></Route>
+                </Routes>
+            </BrowserRouter>
         </ThemeProvider>
     </React.StrictMode>
 );
