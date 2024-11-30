@@ -1,4 +1,6 @@
-import {ChangeEvent, useState} from "react";
+// noinspection t
+
+import {ChangeEvent, useRef, useState} from "react";
 
 interface Users {
     id: string;
@@ -22,12 +24,19 @@ const data = [{
 
 export const UsersDatabase = () => {
     const [selected, setSelected] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
     const [filter, setFilter] = useState('');
     const [users, setUsers] = useState<Users[]>(data || [])
 
+    const firstNameRef = useRef<HTMLInputElement>(null);
+    const lastNameRef = useRef<HTMLInputElement>(null);
+
     const filteredUsers = users.filter((user) => user.firstName.toLowerCase().includes(filter.toLowerCase()) || user.lastName.toLowerCase().includes(filter.toLowerCase()));
+
+
+    const handleSubmit = (event: any) => {
+        event.preventDefault();
+        console.log("The submitted firstName is: " + firstNameRef.current?.value);
+    };
 
     const handleSelect = (e: ChangeEvent<HTMLSelectElement>) => {
         const newSelected = e.target.value
@@ -35,30 +44,36 @@ export const UsersDatabase = () => {
 
         const foundUser = users.find((user) => user.id === newSelected)
         if (foundUser) {
-            setFirstName(foundUser.firstName)
-            setLastName(foundUser.lastName)
+            if (firstNameRef.current) firstNameRef.current.value = foundUser.firstName;
+            if (lastNameRef.current) lastNameRef.current.value = foundUser.lastName;
         }
     }
 
     const createUserHandler = () => {
+        const newFirstName = firstNameRef.current?.value || '';
+        const newLastName = lastNameRef.current?.value || '';
+
         const newUser = {
             id: Date.now().toString(),
-            firstName,
-            lastName
+            firstName: newFirstName,
+            lastName: newLastName,
         }
         setUsers((prev) => prev.concat(newUser))
         clearSelectionHandler()
     }
 
     const updateUserHandler = () => {
+        const newFirstName = firstNameRef.current?.value || '';
+        const newLastName = lastNameRef.current?.value || '';
+
         const newUsers = [...users];
         const foundUser = newUsers.find(
             ({id}) => selected === id,
         );
 
         if (foundUser) {
-            foundUser.firstName = firstName
-            foundUser.lastName = lastName
+            foundUser.firstName = newFirstName;
+            foundUser.lastName = newLastName;
             setUsers(newUsers)
         }
     }
@@ -71,15 +86,15 @@ export const UsersDatabase = () => {
 
     const clearSelectionHandler = () => {
         setSelected('')
-        setFirstName('')
-        setLastName('')
+        if (firstNameRef.current) firstNameRef.current.value = '';
+        if (lastNameRef.current) lastNameRef.current.value = '';
     }
 
     return (
         <>
             <div className='max-xl m-4'>
                 <h1 className='text-2xl font-bold mb-4'>Users Database App</h1>
-                <form>
+                <div>
                     {/* Search Input */}
                     <input type="text" placeholder="Search" className="p-1 border border-gray-500 rounded my-1"
                            value={filter}
@@ -97,15 +112,13 @@ export const UsersDatabase = () => {
                     </div>
 
                     {/* Form inputs */}
-                    <div className="flex gap-4">
-                        <input type="text" placeholder="First Name" value={firstName}
-                               onChange={(e) => setFirstName(e.target.value)}
+                    <form className="flex gap-4" onSubmit={handleSubmit}>
+                        <input type="text" placeholder="First Name" ref={firstNameRef}
                                className="p-1 border border-gray-500 rounded my-1"/>
-                        <input type="text" placeholder="Last Name" value={lastName}
-                               onChange={(e) => setLastName(e.target.value)}
+                        <input type="text" placeholder="Last Name" ref={lastNameRef}
                                className="p-1 border border-gray-500 rounded my-1"
                         />
-                    </div>
+                    </form>
 
                     {/* Action buttons */}
                     <div className="flex gap-4 mt-4">
@@ -122,7 +135,7 @@ export const UsersDatabase = () => {
                                 onClick={clearSelectionHandler}>Cancel Selection
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
         </>
     )

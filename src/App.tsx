@@ -1,6 +1,10 @@
 import React, {useContext} from 'react';
 import {ThemeContext} from "./ThemeContext";
 import {Link} from "react-router-dom";
+import {UsersDatabase} from "./components/UsersDatabase/UsersDatabase";
+import {Counter} from "./components/Counter/Counter";
+import {Charts} from "./components/Charts/Charts";
+import {Rendering} from "./components/UnderstandingRendering/Rendering";
 
 function App() {
     const {theme, toggleTheme} = useContext(ThemeContext)
@@ -16,10 +20,10 @@ function App() {
                 <Link to="/products" className="bg-pink-500 text-white border-1 border-pink-500 rounded p-2">Show
                     Products</Link>
             </div>
-            {/*<UsersDatabase/>*/}
-            {/*<Counter/>*/}
-            {/*<Charts/>*/}
-            {/*<Rendering/>*/}
+            <UsersDatabase/>
+            <Counter/>
+            <Charts/>
+            <Rendering/>
         </div>
 
 
